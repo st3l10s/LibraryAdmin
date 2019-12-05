@@ -23,7 +23,7 @@ namespace WebAPI.Persistence.Repositories
 
         public async Task<Author> FindByIdAsync(int id)
         {
-            return await _context.Authors.FindAsync(id);
+            return await _context.Authors.Include(x => x.Books).FirstOrDefaultAsync(x => x.Id == id);
         }
 
         public async Task<IEnumerable<Author>> ListAsync()

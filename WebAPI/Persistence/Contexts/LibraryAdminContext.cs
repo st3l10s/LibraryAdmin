@@ -40,6 +40,9 @@ namespace WebAPI.Persistence.Contexts
                 entity.Property(p => p.LastName)
                 .HasColumnType("VARCHAR(50)")
                 .IsRequired();
+
+                entity.Property(p => p.BirthDay)
+                .HasColumnType("DATE");
             });
 
             builder.Entity<Book>(entity =>

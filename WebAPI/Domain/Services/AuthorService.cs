@@ -32,6 +32,7 @@ namespace WebAPI.Domain.Services
             {
                 _authorRepository.Remove(existingAuthor);
                 await _unitOfWork.CompleteAsync();
+                existingAuthor = await _authorRepository.FindByIdAsync(id);
 
                 return new AuthorResponse(existingAuthor);
             }
@@ -68,6 +69,7 @@ namespace WebAPI.Domain.Services
             {
                 await _authorRepository.AddAsync(author);
                 await _unitOfWork.CompleteAsync();
+                author = await _authorRepository.FindByIdAsync(author.Id);
 
                 return new AuthorResponse(author);
             }
@@ -96,6 +98,7 @@ namespace WebAPI.Domain.Services
             {
                 _authorRepository.Update(existingAuthor);
                 await _unitOfWork.CompleteAsync();
+                existingAuthor = await _authorRepository.FindByIdAsync(id);
 
                 return new AuthorResponse(existingAuthor);
             }
