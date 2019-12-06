@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -12,11 +13,13 @@ namespace WebAPI.Domain.Services
     {
         private readonly ICategoryRepository _categoryRepository;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly ILogger<CategoryService> _logger;
 
-        public CategoryService(ICategoryRepository categoryRepository, IUnitOfWork unitOfWork)
+        public CategoryService(ICategoryRepository categoryRepository, IUnitOfWork unitOfWork, ILogger<CategoryService> logger)
         {
             _categoryRepository = categoryRepository;
             _unitOfWork = unitOfWork;
+            _logger = logger;
         }
 
         public async Task<CategoryResponse> DeleteAsync(int id)
@@ -38,7 +41,8 @@ namespace WebAPI.Domain.Services
             }
             catch(Exception e)
             {
-                //TODO - Log the exception  
+                _logger.LogError(e.ToString());
+
                 return new CategoryResponse("An error ocurred while deleting the Category: " +
                     $"{e.Message} {e.InnerException?.Message}");
             }
@@ -75,7 +79,8 @@ namespace WebAPI.Domain.Services
             }
             catch(Exception e)
             {
-                //TODO - Log the exception
+                _logger.LogError(e.ToString());
+
                 return new CategoryResponse("An error ocurred while saving the Category: " +
                     $"{e.Message} {e.InnerException?.Message}");
             }
@@ -103,7 +108,8 @@ namespace WebAPI.Domain.Services
             }
             catch(Exception e)
             {
-                //TODO - Log the exception
+                _logger.LogError(e.ToString());
+
                 return new CategoryResponse("An error ocurred while updating the Category: " +
                     $"{e.Message} {e.InnerException?.Message}");
             }

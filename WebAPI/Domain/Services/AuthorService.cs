@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -12,11 +13,13 @@ namespace WebAPI.Domain.Services
     {
         private readonly IAuthorRepository _authorRepository;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly ILogger<AuthorService> _logger;
 
-        public AuthorService(IAuthorRepository authorRepository, IUnitOfWork unitOfWork)
+        public AuthorService(IAuthorRepository authorRepository, IUnitOfWork unitOfWork, ILogger<AuthorService> logger)
         {
             _authorRepository = authorRepository;
             _unitOfWork = unitOfWork;
+            _logger = logger;
         }
 
         public async Task<AuthorResponse> DeleteAsync(int id)
@@ -38,7 +41,8 @@ namespace WebAPI.Domain.Services
             }
             catch(Exception e)
             {
-                //TODO - Log the exception  
+                _logger.LogError(e.ToString());
+
                 return new AuthorResponse("An error ocurred while deleting the Author: " +
                     $"{e.Message} {e.InnerException?.Message}");
             }
@@ -75,7 +79,8 @@ namespace WebAPI.Domain.Services
             }
             catch(Exception e)
             {
-                //TODO - Log the exception
+                _logger.LogError(e.ToString());
+
                 return new AuthorResponse("An error ocurred while saving the Author: " +
                     $"{e.Message} {e.InnerException?.Message}");
             }
@@ -104,7 +109,8 @@ namespace WebAPI.Domain.Services
             }
             catch(Exception e)
             {
-                //TODO - Log the exception
+                _logger.LogError(e.ToString());
+
                 return new AuthorResponse("An error ocurred while updating the Author: " +
                     $"{e.Message} {e.InnerException?.Message}");
             }

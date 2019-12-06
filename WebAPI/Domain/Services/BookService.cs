@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -12,11 +13,13 @@ namespace WebAPI.Domain.Services
     {
         private readonly IBookRepository _bookRepository;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly ILogger<BookService> _logger;
 
-        public BookService(IBookRepository bookRepository, IUnitOfWork unitOfWork)
+        public BookService(IBookRepository bookRepository, IUnitOfWork unitOfWork, ILogger<BookService> logger)
         {
             _bookRepository = bookRepository;
             _unitOfWork = unitOfWork;
+            _logger = logger;
         }
 
         public async Task<BookResponse> DeleteAsync(int id)
@@ -38,7 +41,8 @@ namespace WebAPI.Domain.Services
             }
             catch(Exception e)
             {
-                //TODO - Log the exception  
+                _logger.LogError(e.ToString());
+
                 return new BookResponse("An error ocurred while deleting the Book: " +
                     $"{e.Message} {e.InnerException?.Message}");
             }
@@ -75,7 +79,8 @@ namespace WebAPI.Domain.Services
             }
             catch(Exception e)
             {
-                //TODO - Log the exception
+                _logger.LogError(e.ToString());
+
                 return new BookResponse("An error ocurred while saving the Book: " +
                     $"{e.Message} {e.InnerException?.Message}");
             }
@@ -104,7 +109,8 @@ namespace WebAPI.Domain.Services
             }
             catch(Exception e)
             {
-                //TODO - Log the exception
+                _logger.LogError(e.ToString());
+
                 return new BookResponse("An error ocurred while updating the Book: " +
                     $"{e.Message} {e.InnerException?.Message}");
             }
