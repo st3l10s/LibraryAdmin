@@ -10,7 +10,5 @@ namespace WebAPI.Resources
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-
-        public IList<BookDisplayResource> Books { get; set; } = new List<BookDisplayResource>();
     }
 }

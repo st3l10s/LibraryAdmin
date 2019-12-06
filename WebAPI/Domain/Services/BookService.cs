@@ -12,12 +12,17 @@ namespace WebAPI.Domain.Services
     public class BookService : IBookService
     {
         private readonly IBookRepository _bookRepository;
+        private readonly IAuthorRepository _authorRepository;
+        private readonly ICategoryRepository _categoryRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly ILogger<BookService> _logger;
 
-        public BookService(IBookRepository bookRepository, IUnitOfWork unitOfWork, ILogger<BookService> logger)
+        public BookService(IBookRepository bookRepository, IAuthorRepository authorRepository, ICategoryRepository categoryRepository,
+            IUnitOfWork unitOfWork, ILogger<BookService> logger)
         {
             _bookRepository = bookRepository;
+            _authorRepository = authorRepository;
+            _categoryRepository = categoryRepository;
             _unitOfWork = unitOfWork;
             _logger = logger;
         }
@@ -69,6 +74,22 @@ namespace WebAPI.Domain.Services
 
         public async Task<BookResponse> SaveAsync(Book book)
         {
+            Author author = await _authorRepository.FindByIdAsync(book.AuthorId);
+
+            if (author == null)
+            {
+                return new BookResponse($"Author with Id: {book.AuthorId} does not exist");
+            }
+
+            foreach (CategoryBook categoryBook in book.Categories)
+            {
+                Category category = await _categoryRepository.FindByIdAsync(categoryBook.CategoryId);
+                if (category == null)
+                {
+                    return new BookResponse($"Category with Id: {categoryBook.CategoryId} does not exist");
+                }
+            }
+
             try
             {
                 await _bookRepository.AddAsync(book);
@@ -95,9 +116,26 @@ namespace WebAPI.Domain.Services
                 return new BookResponse("Book not found");
             }
 
+            Author author = await _authorRepository.FindByIdAsync(book.AuthorId);
+
+            if (author == null)
+            {
+                return new BookResponse($"Author with Id: {book.AuthorId} does not exist");
+            }
+
+            foreach (CategoryBook categoryBook in book.Categories)
+            {
+                Category category = await _categoryRepository.FindByIdAsync(categoryBook.CategoryId);
+                if (category == null)
+                {
+                    return new BookResponse($"Category with Id: {categoryBook.CategoryId} does not exist");
+                }
+            }
+
             existingBook.AuthorId = book.AuthorId;
             existingBook.ISBN = book.ISBN;
             existingBook.Name = book.Name;
+            existingBook.Categories = book.Categories;
 
             try
             {
