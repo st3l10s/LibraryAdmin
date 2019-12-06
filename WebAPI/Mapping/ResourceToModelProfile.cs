@@ -17,6 +17,8 @@ namespace WebAPI.Mapping
             CreateMap<BookSaveResource, Book>();
 
             CreateMap<CategorySaveResource, Category>();
+
+            CreateMap<CategoryBookSaveResource, CategoryBook>();
         }
     }
 }

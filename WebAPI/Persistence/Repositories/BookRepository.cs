@@ -24,8 +24,9 @@ namespace WebAPI.Persistence.Repositories
         public async Task<Book> FindByIdAsync(int id)
         {
             return await _context.Books
-                .Include(x => x.Categories)
                 .Include(x => x.Author)
+                .Include(x => x.Categories)
+                .ThenInclude(x => x.Category)
                 .FirstOrDefaultAsync(x => x.Id == id);
         }
 

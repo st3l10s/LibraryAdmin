@@ -13,6 +13,6 @@ namespace WebAPI.Resources
 
         public AuthorDisplayResource Author { get; set; }
 
-        public IList<CategoryDisplayResource> Categories { get; set; } = new List<CategoryDisplayResource>();
+        public IList<CategoryBookDisplayResource> Categories { get; set; } = new List<CategoryBookDisplayResource>();
     }
 }

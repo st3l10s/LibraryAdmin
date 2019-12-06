@@ -21,6 +21,7 @@ namespace WebAPI.Mapping
             CreateMap<Category, CategoryDisplayResource>();
             CreateMap<Category, CategoryDetailResource>();
 
+            CreateMap<CategoryBook, CategoryBookDisplayResource>();
         }
     }
 }
