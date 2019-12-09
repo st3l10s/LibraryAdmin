@@ -13,8 +13,8 @@ import { CategoriesComponent } from './categories/categories.component';
 
 const routes: Routes = [
   { path: '', component: BooksComponent },
-  { path: 'book/:id', component: BookComponent },
   { path: 'book/add', component: BookAddEditComponent },
+  { path: 'book/:id', component: BookComponent },
   { path: 'book/edit/:id', component: BookAddEditComponent },
   { path: 'author', component: AuthorsComponent },
   { path: 'author/add', component: AuthorAddEditComponent },

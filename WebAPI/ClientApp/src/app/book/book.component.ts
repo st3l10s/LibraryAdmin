@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Book } from '../models/book';
 import { BookService } from '../services/book.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-book',
@@ -9,26 +10,21 @@ import { BookService } from '../services/book.service';
   styleUrls: ['./book.component.scss']
 })
 export class BookComponent implements OnInit {
+  book$: Observable<Book>;
+  id: number;
 
-  books$: Observable<Book[]>;
-
-  constructor(private bookService: BookService) { }
+  constructor(private bookService: BookService, private avRoute: ActivatedRoute) {
+    const idParam = 'id';
+    if (this.avRoute.snapshot.params[idParam]) {
+      this.id = this.avRoute.snapshot.params[idParam];
+    }
+  }
 
   ngOnInit() {
-    this.loadBooks();
+    this.loadBook();
   }
 
-  loadBooks() {
-    this.books$ = this.bookService.getBooks();
-  }
-
-  delete(id: number) {
-    const ans = confirm('Quiere eliminar el libro con id: ' + id + '?');
-
-    if (ans) {
-      this.bookService.deleteBook(id).subscribe((data) => {
-        this.loadBooks();
-      });
-    }
+  loadBook() {
+    this.book$ = this.bookService.getBook(this.id);
   }
 }

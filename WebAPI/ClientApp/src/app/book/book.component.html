@@ -1,25 +1,9 @@
-<h1>Libros</h1>
+<ng-container *ngIf="(book$ | async) as book; else loading">
 
-<p *ngIf="!(books$ | async)"><em>Cargando...</em></p>
-<p>
-  <a [routerLink]="['/book/add']" class="btn btn-primary float-right mb-3">Crear nuevo libro</a>
-</p>
-
-<table class="table table-sm table-hover" *ngIf="(books$ | async)?.length>0">
-  <thead>
-    <tr>
-      <th>#</th>
-      <th>Nombre</th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let book of (books$ | async)">
-      <td>{{ book.id }}</td>
-      <td><a [routerLink]="['/book/', book.id]">{{ book.name }}</a></td>
-      <td><a [routerLink]="['/book/edit/', book.id]" class="btn btn-primary btn-sm float-right">Editar</a></td>
-      <td><a [routerLink]="" (click)="delete(book.id)" class="btn btn-danger btn-sm float-right">Eliminar</a></td>
-    </tr>
-  </tbody>
-</table>
+  <h1>Nombre: {{ book.name }}</h1>
+  <h2>ISBN: {{ book.isbn }}</h2>
+  <h2>Autor: {{ book.author.name }}</h2>
+  <h2 *ngFor="let category of (book.categories)">Categoría: {{ category.name }}</h2>
+    
+</ng-container>
+<ng-template #loading>Cargando…</ng-template>

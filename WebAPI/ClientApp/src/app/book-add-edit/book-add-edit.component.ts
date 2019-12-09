@@ -9,6 +9,7 @@ import { Author } from '../models/author';
 import { Observable } from 'rxjs';
 import { AuthorService } from '../services/author.service';
 import { CategoryService } from '../services/category.service';
+import { CategoryBookSave } from '../models/categoryBookSave';
 
 @Component({
   selector: 'app-book-add-edit',
@@ -73,11 +74,18 @@ export class BookAddEditComponent implements OnInit {
     }
 
     if (this.actionType === 'Crear') {
+      const categories = this.form.get(this.formCategories).value;
+      const categoryBooks = [];
+      for (let i = 0; i < categories.length; i++) {
+        const categoryBook = new CategoryBookSave();
+        categoryBook.categoryId = categories[i].id;
+        categoryBooks[i] = categoryBook;
+      }
       const book: BookSave = {
         name: this.form.get(this.formName).value,
         isbn: this.form.get(this.formIsbn).value,
         authorId: parseInt(this.form.get(this.formAuthorId).value, 10),
-        categories: this.form.get(this.formCategories).value
+        categories: categoryBooks
       };
 
       this.bookService.saveBook(book)
@@ -87,11 +95,18 @@ export class BookAddEditComponent implements OnInit {
     }
 
     if (this.actionType === 'Editar') {
+      const categories = this.form.get(this.formCategories).value;
+      const categoryBooks = [];
+      for (let i = 0; i < categories.length; i++) {
+        const categoryBook = new CategoryBookSave();
+        categoryBook.categoryId = categories[i].id;
+        categoryBooks[i] = categoryBook;
+      }
       const book: BookSave = {
         name: this.form.get(this.formName).value,
         isbn: this.form.get(this.formIsbn).value,
         authorId: parseInt(this.form.get(this.formAuthorId).value, 10),
-        categories: this.form.get(this.formCategories).value
+        categories: categoryBooks
       };
 
       this.bookService.updateBook(this.id, book)
