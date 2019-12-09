@@ -1,0 +1,34 @@
+<h1>{{actionType}} autor</h1>
+<form [formGroup]="form" (ngSubmit)="save()" #formDir="ngForm" novalidate>
+  <div class="form-group row">
+    <label class=" control-label col-md-12" for="name">Nombre</label>
+    <div class="col-md-12">
+      <input class="form-control" type="text" formControlName="name" id="name">
+    </div>
+    <span class="text-danger ml-3" *ngIf="name.invalid && formDir.submitted">
+      Nombre obligatorio
+    </span>
+  </div>
+  <div class="form-group row">
+    <label class="control-label col-md-12" for="lastName">Apellido</label>
+    <div class="col-md-12">
+      <input class="form-control" type="text" formControlName="lastName" id="lastName">
+    </div>
+    <span class="text-danger ml-3" *ngIf="lastName.invalid && formDir.submitted">
+      Apellido obligatorio
+    </span>
+  </div>
+  <div class="form-group row">
+    <label class="control-label col-md-12" for="birthDay">Fecha de nacimiento</label>
+    <div class="col-md-12">
+      <input class="form-control" type="text" formControlName="birthDay" id="birthDay" placeholder="AAAA-MM-DD">
+    </div>
+    <span class="text-danger ml-3" *ngIf="birthDay.invalid && formDir.submitted">
+      Fecha de nacimiento obligatoria
+    </span>
+  </div>
+  <div class="form-group">
+    <button type="submit" class="btn btn-success float-right">Guardar</button>
+    <button class="btn btn-secondary float-left" (click)="cancel()">Cancelar</button>
+  </div>
+</form>

@@ -1,0 +1,7 @@
+<ng-container *ngIf="(author$ | async) as author; else loading">
+
+    <h1>{{ author.name }} {{ author.lastName }}</h1>
+    <h2>{{ author.birthDay }}</h2>
+      
+</ng-container>
+<ng-template #loading>Cargando…</ng-template>

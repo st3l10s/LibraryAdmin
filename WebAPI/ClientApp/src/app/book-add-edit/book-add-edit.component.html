@@ -1,0 +1,55 @@
+<h1>{{actionType}} libro</h1>
+<form [formGroup]="form" (ngSubmit)="save()" #formDir="ngForm" novalidate>
+    <div class="form-group row">
+        <label class=" control-label col-md-12" for="name">Nombre</label>
+        <div class="col-md-12">
+            <input class="form-control" type="text" formControlName="name" id="name">
+        </div>
+        <span class="text-danger ml-3" *ngIf="name.invalid && formDir.submitted">
+            Nombre obligatorio
+        </span>
+    </div>
+    <div class="form-group row">
+        <label class="control-label col-md-12" for="isbn">ISBN</label>
+        <div class="col-md-12">
+            <input class="form-control" type="number" formControlName="isbn" id="isbn">
+        </div>
+        <span class="text-danger ml-3" *ngIf="isbn.invalid && formDir.submitted">
+            ISBN obligatorio
+        </span>
+    </div>
+    <div class="form-group row">
+        <label class="control-label col-md-12" for="authorId">Autor</label>
+        <div class="col-md-12">
+            <select formControlName="authorId" id="authorId" class="form-control" [value]="authorId">
+                <option *ngFor="let author of (authors$ | async)" [value]="author.id">
+                    {{ author.name }}
+                </option>
+            </select>
+        </div>
+        <span class="text-danger ml-3" *ngIf="authorId.invalid && formDir.submitted">
+            Autor obligatorio
+        </span>
+    </div>
+    <div class="form-group row">
+        <label class="control-label col-md-12" for="categories">Categorías</label>
+        <ng-select bindLabel="name"
+                placeholder="Select item"
+                appendTo="categories"
+                multiple="true"
+                [searchable]="true" 
+                [clearable]="true",
+                formControlName="categories">
+                <ng-option [value]="item.id" *ngFor="let item of (allCategories$ | async)">
+                    {{item.name}}
+                </ng-option>
+    </ng-select>
+        <span class="text-danger ml-3" *ngIf="categories.invalid && formDir.submitted">
+            Categoria obligatoria
+        </span>
+    </div>
+    <div class="form-group">
+        <button type="submit" class="btn btn-success float-right">Guardar</button>
+        <button class="btn btn-secondary float-left" (click)="cancel()">Cancelar</button>
+    </div>
+</form>
