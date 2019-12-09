@@ -31,6 +31,7 @@ dotnet run
 ### Running the client
 ```bash
 cd LibraryAdmin/WebAPI/ClientApp
+npm update
 ng serve
 ```
 
