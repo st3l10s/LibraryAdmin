@@ -17,12 +17,12 @@ const routes: Routes = [
   { path: 'book/add', component: BookAddEditComponent },
   { path: 'book/edit/:id', component: BookAddEditComponent },
   { path: 'author', component: AuthorsComponent },
-  { path: 'author/:id', component: AuthorComponent },
   { path: 'author/add', component: AuthorAddEditComponent },
+  { path: 'author/:id', component: AuthorComponent },
   { path: 'author/edit/:id', component: AuthorAddEditComponent },
   { path: 'category', component: CategoriesComponent },
-  { path: 'category/:id', component: CategoryComponent },
   { path: 'category/add', component: CategoryAddEditComponent },
+  { path: 'category/:id', component: CategoryComponent },
   { path: 'category/edit/:id', component: CategoryAddEditComponent },
   { path: '**', redirectTo: '/' }
 ];
